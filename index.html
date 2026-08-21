@@ -3,94 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zakaria Hossain - Portfolio</title>
+    <title>Zakaria Hasan - Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Kalpurush&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a, #1e1b4b, #0f172a);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-color: #fff;
+            --subtext-color: #a0aec0;
+            --accent-color: #00f2fe;
+            --item-bg: rgba(0, 0, 0, 0.3);
+        }
+
+        .light-mode {
+            --bg-gradient: linear-gradient(135deg, #e2e8f0, #f1f5f9, #cbd5e1);
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --text-color: #0f172a;
+            --subtext-color: #475569;
+            --accent-color: #0284c7;
+            --item-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
         body {
             font-family: 'Poppins', 'Kalpurush', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            background: var(--bg-gradient);
             min-height: 100vh;
-            color: #fff;
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 20px 10px;
         }
-        .main-container { width: 100%; max-width: 500px; }
+        .main-container { width: 100%; max-width: 500px; position: relative; }
         
-        /* প্রোফাইল কার্ড */
+        /* থিম টগল বাটন */
+        .theme-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 10;
+        }
+
+        /* প্রোফাইল কার্ড অ্যানিমেশন */
         .profile-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 25px;
+            border: 1px solid var(--border-color);
+            padding: 25px 20px;
             border-radius: 20px;
             text-align: center;
             margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideDown 0.8s ease-in-out;
         }
-        .profile-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid #00f2fe; object-fit: cover; }
-        h1 { font-size: 24px; color: #00f2fe; margin-top: 10px; }
-        p.title { font-size: 12px; color: #a0aec0; letter-spacing: 1px; }
+        .profile-img { 
+            width: 95px; 
+            height: 95px; 
+            border-radius: 50%; 
+            border: 3px solid var(--accent-color); 
+            object-fit: cover;
+            animation: pulseGlow 3s infinite alternate;
+        }
+        h1 { font-size: 24px; color: var(--accent-color); margin-top: 10px; }
+        p.title { font-size: 11px; color: var(--subtext-color); letter-spacing: 1.5px; margin-bottom: 8px; }
+        
+        .status-badge {
+            display: inline-block;
+            font-size: 11px;
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .location { font-size: 12px; color: var(--subtext-color); margin-bottom: 10px; }
 
-        /* নেভিগেশন ট্যাব */
+        p.bio { font-size: 13px; color: var(--text-color); line-height: 1.5; margin-bottom: 15px; }
+
+        /* স্কিলস ট্যাগ */
+        .skills-container { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+        .skill-badge {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            transition: transform 0.3s;
+        }
+        .skill-badge:hover { transform: scale(1.1); }
+
+        /* নেভিগেশন ট্যাব ও মেসেঞ্জার ব্যাজ */
         .nav-tabs {
             display: flex;
             justify-content: space-around;
-            background: rgba(0, 0, 0, 0.3);
+            background: var(--item-bg);
             border-radius: 12px;
-            padding: 8px;
+            padding: 12px 6px 8px;
             margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            animation: fadeIn 1s ease-in-out;
         }
         .tab-btn {
+            position: relative;
             background: none;
             border: none;
-            color: #a0aec0;
-            font-size: 14px;
+            color: var(--subtext-color);
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
             padding: 8px 12px;
             border-radius: 8px;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
-        .tab-btn.active { background: #00f2fe; color: #1a1a2e; }
+        .tab-btn.active { 
+            background: var(--accent-color); 
+            color: #0f172a; 
+        }
+
+        .tab-badge {
+            position: absolute;
+            top: -8px;
+            right: 4px;
+            background: #00f2fe;
+            color: #0f172a;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+            line-height: 1;
+            animation: badgeBounce 2s infinite;
+        }
+
+        .tab-btn.active .tab-badge {
+            background: #0f172a;
+            color: #00f2fe;
+        }
 
         /* স্লাইডার স্টাইল */
-        .swiper { width: 100%; padding-bottom: 20px; }
+        .swiper { width: 100%; padding-bottom: 10px; }
         .slide-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
             border-radius: 15px;
             padding: 20px;
-            min-height: 250px;
+            min-height: 260px;
+            animation: fadeIn 1.2s ease-in-out;
         }
 
-        /* লেখার লিস্ট কার্ড */
+        /* কার্ড অ্যানিমেশন */
         .item-card {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 12px;
+            background: var(--item-bg);
+            padding: 12px 15px;
             border-radius: 10px;
             margin-bottom: 10px;
             cursor: pointer;
-            border-left: 3px solid #00f2fe;
-            transition: background 0.3s;
+            border-left: 3px solid var(--accent-color);
+            transition: all 0.3s ease;
         }
-        .item-card:hover { background: rgba(0, 242, 254, 0.15); }
+        .item-card:hover { 
+            transform: translateX(6px) scale(1.01); 
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.2);
+        }
 
-        /* আলাদা পেজ (Full View) */
+        .download-btn {
+            display: block;
+            text-align: center;
+            background: var(--accent-color);
+            color: #0f172a;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 12px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: transform 0.3s;
+        }
+        .download-btn:hover { transform: translateY(-2px); }
+
+        .contact-box {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .contact-btn, .copy-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .contact-btn:hover, .copy-btn:hover { background: var(--accent-color); color: #0f172a; }
+
+        /* পপআপ পেজ অ্যানিমেশন */
         .page-view {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #16213e;
+            background: #0f172a;
             z-index: 100;
             padding: 30px 20px;
             overflow-y: auto;
+            color: #fff;
+            animation: zoomIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .back-btn {
-            background: #00f2fe;
-            color: #1a1a2e;
+            background: var(--accent-color);
+            color: #0f172a;
             border: none;
             padding: 8px 15px;
             font-weight: bold;
@@ -98,63 +239,128 @@
             margin-bottom: 20px;
             cursor: pointer;
         }
-        .author-name {
-            color: #00f2fe;
-            font-size: 14px;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
+        .author-name { color: var(--accent-color); font-size: 14px; margin-bottom: 20px; font-weight: 500; }
         .poem-content { font-style: italic; white-space: pre-line; line-height: 1.8; color: #e2e8f0; font-size: 14px; }
+
+        /* কাস্টম অ্যানিমেশন Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes pulseGlow {
+            from { box-shadow: 0 0 5px rgba(0, 242, 254, 0.3); }
+            to { box-shadow: 0 0 20px rgba(0, 242, 254, 0.8); }
+        }
+        @keyframes badgeBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
     </style>
 </head>
 <body>
 
 <div class="main-container">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 Theme</button>
+
     <div class="profile-card">
-        <img src="Zakaria.jpg" alt="Zakaria Hossain" class="profile-img">
-        <h1>Zakaria Hossain</h1>
+        <img src="Zakaria.jpg" alt="Zakaria Hasan" class="profile-img">
+        <h1>Zakaria Hasan</h1>
         <p class="title">TECH DEVELOPER & CONTENT CREATOR</p>
+        
+        <div class="status-badge">🟢 Available for Projects</div>
+        <div class="location">📍 Shahjadpur, Sirajganj, Bangladesh</div>
+        
+        <p class="bio">শব্দ আর কোডিং দিয়ে গল্প সাজাই। নতুন কিছু শেখা এবং কন্টেন্ট তৈরিতেই আমার আনন্দ।</p>
+        
+        <div class="skills-container">
+            <span class="skill-badge">Python</span>
+            <span class="skill-badge">HTML/CSS</span>
+            <span class="skill-badge">Content Creation</span>
+            <span class="skill-badge">Writing</span>
+        </div>
     </div>
 
-    <!-- সেকশন ট্যাব -->
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="goToSlide(0)">📝 লেখালেখি</button>
-        <button class="tab-btn" onclick="goToSlide(1)">💻 কোডিং</button>
-        <button class="tab-btn" onclick="goToSlide(2)">🎬 কন্টেন্ট</button>
+        <button class="tab-btn active" onclick="goToSlide(0)">
+            <span class="tab-badge">8</span>
+            📝 লেখালেখি
+        </button>
+        <button class="tab-btn" onclick="goToSlide(1)">
+            <span class="tab-badge">1</span>
+            💻 কোডিং
+        </button>
+        <button class="tab-btn" onclick="goToSlide(2)">
+            <span class="tab-badge">50+</span>
+            🎬 কন্টেন্ট
+        </button>
     </div>
 
-    <!-- সোয়াইপ স্লাইডার -->
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
             
             <!-- স্লাইড ১: লেখালেখি -->
             <div class="swiper-slide">
                 <div class="slide-card">
-                    <h3 style="color: #00f2fe; margin-bottom: 15px;">আমার লেখালেখি</h3>
+                    <h3 style="color: var(--accent-color); margin-bottom: 15px;">আমার লেখালেখি</h3>
                     
                     <div class="item-card" onclick="openPage('poem1')">
                         <strong>— ব্যথা যখন কবিতা —</strong>
-                        <p style="font-size: 12px; color: #a0aec0;">পড়তে এখানে ক্লিক করুন...</p>
+                        <p style="font-size: 12px; color: var(--subtext-color);">পড়তে এখানে ক্লিক করুন...</p>
                     </div>
 
                     <div class="item-card" onclick="openPage('poem2')">
                         <strong>— স্মৃতির শহরে বিষাদের মেঘ —</strong>
-                        <p style="font-size: 12px; color: #a0aec0;">পড়তে এখানে ক্লিক করুন...</p>
+                        <p style="font-size: 12px; color: var(--subtext-color);">পড়তে এখানে ক্লিক করুন...</p>
                     </div>
 
                     <div class="item-card" onclick="openPage('poem3')">
                         <strong>— অতল শূন্যতার গর্ভে —</strong>
-                        <p style="font-size: 12px; color: #a0aec0;">পড়তে এখানে ক্লিক করুন...</p>
+                        <p style="font-size: 12px; color: var(--subtext-color);">পড়তে এখানে ক্লিক করুন...</p>
                     </div>
+
+                    <div class="item-card" onclick="openPage('poem4')">
+                        <strong>— অস্তিত্বের সমাপ্তি —</strong>
+                        <p style="font-size: 12px; color: var(--subtext-color);">পড়তে এখানে ক্লিক করুন...</p>
+                    </div>
+
+                    <div class="item-card" onclick="openPage('poem5')">
+                        <strong>— মুখোশের আড়ালে আমি —</strong>
+                        <p style="font-size: 12px; color: var(--subtext-color);">পড়তে এখানে ক্লিক করুন...</p>
+                    </div>
+
+                    <div class="item-card" onclick="openPage('poem6')">
+                        <strong>— মঞ্চের পিছনের গল্প —</strong>
+                        <p style="font-size: 12px; color: var(--subtext-color);">পড়তে এখানে ক্লিক করুন...</p>
+                    </div>
+
+                    <div class="item-card" onclick="openPage('poem7')">
+                        <strong>— তোমার পর —</strong>
+                        <p style="font-size: 12px; color: var(--subtext-color);">পড়তে এখানে ক্লিক করুন...</p>
+                    </div>
+
+                    <div class="item-card" onclick="openPage('poem8')">
+                        <strong>— একাকীত্বের নীরব আর্তনাদ —</strong>
+                        <p style="font-size: 12px; color: var(--subtext-color);">পড়তে এখানে ক্লিক করুন...</p>
+                    </div>
+
+                    <a href="poems.pdf" download class="download-btn">📥 Download Poems (PDF)</a>
                 </div>
             </div>
 
             <!-- স্লাইড ২: কোডিং -->
             <div class="swiper-slide">
                 <div class="slide-card">
-                    <h3 style="color: #00f2fe; margin-bottom: 15px;">কোডিং প্রজেক্ট</h3>
+                    <h3 style="color: var(--accent-color); margin-bottom: 15px;">কোডিং প্রজেক্ট</h3>
                     <div class="item-card">
-                        <a href="https://github.com/mohammadzakaria589" target="_blank" style="color: #fff; text-decoration: none; display: block;">🔗 GitHub Profile & Repositories</a>
+                        <a href="https://github.com/mohammadzakaria589" target="_blank" style="color: var(--text-color); text-decoration: none; display: block;">🔗 GitHub Profile & Repositories</a>
                     </div>
                 </div>
             </div>
@@ -162,27 +368,33 @@
             <!-- স্লাইড ৩: কন্টেন্ট ক্রিয়েশন -->
             <div class="swiper-slide">
                 <div class="slide-card">
-                    <h3 style="color: #00f2fe; margin-bottom: 15px;">কন্টেন্ট ক্রিয়েশন</h3>
+                    <h3 style="color: var(--accent-color); margin-bottom: 15px;">কন্টেন্ট ক্রিয়েশন</h3>
                     <div class="item-card">
-                        <a href="https://youtube.com/@tuneofsadness?si=yGlhCfqa8mKeM38C" target="_blank" style="color: #fff; text-decoration: none; display: block;">▶️ YouTube Channel (Tune of Sadness)</a>
+                        <a href="https://youtube.com/@tuneofsadness?si=yGlhCfqa8mKeM38C" target="_blank" style="color: var(--text-color); text-decoration: none; display: block;">▶️ YouTube Channel (Tune of Sadness)</a>
                     </div>
                     <div class="item-card">
-                        <a href="https://www.facebook.com/Tune.of.sadness" target="_blank" style="color: #fff; text-decoration: none; display: block;">📘 Facebook Page (Tune of Sadness)</a>
+                        <a href="https://www.facebook.com/Tune.of.sadness" target="_blank" style="color: var(--text-color); text-decoration: none; display: block;">📘 Facebook Page (Tune of Sadness)</a>
                     </div>
                     <div class="item-card">
-                        <a href="https://www.tiktok.com/@zakaria.hossain71?_r=1&_t=ZS-994vD8Yl4ho" target="_blank" style="color: #fff; text-decoration: none; display: block;">🎵 TikTok Profile (@zakaria.hossain71)</a>
+                        <a href="https://www.tiktok.com/@zakaria.hossain71?_r=1&_t=ZS-994vD8Yl4ho" target="_blank" style="color: var(--text-color); text-decoration: none; display: block;">🎵 TikTok Profile (@zakaria.hossain71)</a>
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+
+    <div class="contact-box">
+        <a href="mailto:Zakariahossain589@gmail.com" class="contact-btn">✉️ Email</a>
+        <a href="https://wa.me/8801778249553" target="_blank" class="contact-btn">💬 WhatsApp</a>
+        <button class="copy-btn" onclick="copyContact('Zakariahossain589@gmail.com')">📋 Copy Email</button>
+    </div>
 </div>
 
-<!-- আলাদা পেজ ১ (ব্যথা যখন কবিতা) -->
+<!-- আলাদা পেজ ১ -->
 <div id="poem1" class="page-view">
     <button class="back-btn" onclick="closePage('poem1')">← ফিরে যান</button>
-    <h2 style="color: #00f2fe; margin-bottom: 5px;">ব্যথা যখন কবিতা</h2>
+    <h2 style="color: var(--accent-color); margin-bottom: 5px;">ব্যথা যখন কবিতা</h2>
     <div class="author-name">— জাকারিয়া হাছান</div>
     <div class="poem-content">
 আমি সমর্পণ করেছি নিজেকে, বেদনার হিমশীতল স্পর্শে। একদা যাকে দূরে বলে জেনেছি, আজ সে আমার আশ্রয়। আমার হৃদয়ের ভাঙা টুকরোগুলো দিয়ে গড়া এক পবিত্র স্থানে, এই ব্যথা এখন নীরব সাধিকা।
@@ -193,10 +405,10 @@
     </div>
 </div>
 
-<!-- আলাদা পেজ ২ (স্মৃতির শহরে বিষাদের মেঘ) -->
+<!-- আলাদা পেজ ২ -->
 <div id="poem2" class="page-view">
     <button class="back-btn" onclick="closePage('poem2')">← ফিরে যান</button>
-    <h2 style="color: #00f2fe; margin-bottom: 5px;">স্মৃতির শহরে বিষাদের মেঘ</h2>
+    <h2 style="color: var(--accent-color); margin-bottom: 5px;">স্মৃতির শহরে বিষাদের মেঘ</h2>
     <div class="author-name">— জাকারিয়া হাছান</div>
     <div class="poem-content">
 স্মৃতির শহরে আমি একাকী হেঁটে চলি। পায়ের নিচে চাপা পড়ে থাকে পুরনো দিনের হাসির টুকরো, আর মাথার ওপর দিয়ে ভেসে যায় বিষাদের মেঘ। অব্যক্ত যত অনুভূতি, তারা সব ভিড় করে আসে এই মেঘে। কিছু কথা যা বলা হয়নি, কিছু কান্না যা ঝরে পড়েনি, কিছু অভিমান যা লুকিয়ে ছিল হৃদয়ের গভীরে—সবকিছুই জমা হয়েছে এখানে।
@@ -209,19 +421,98 @@
     </div>
 </div>
 
-<!-- আলাদা পেজ ৩ (অতল শূন্যতার গর্ভে) -->
+<!-- আলাদা পেজ ৩ -->
 <div id="poem3" class="page-view">
     <button class="back-btn" onclick="closePage('poem3')">← ফিরে যান</button>
-    <h2 style="color: #00f2fe; margin-bottom: 5px;">অতল শূন্যতার গর্ভে</h2>
+    <h2 style="color: var(--accent-color); margin-bottom: 5px;">অতল শূন্যতার গর্ভে</h2>
     <div class="author-name">— জাকারিয়া হাছান</div>
     <div class="poem-content">
 তারপর, ফুরিয়ে দেবো নিজের সমস্ত অস্তিত্ব, নিঃশেষ করবো প্রতিটি বিন্দুকণা; মিশে যাবো অতলান্ত শূন্যতার গর্ভে। এ এক মহাজাগতিক আত্ম-বিসর্জন, যেখানে প্রাণের শেষ স্পন্দনটুকুও বিলীন হয়ে যায় এক আদিম নৈঃশব্দে। এ যেন দীর্ঘ যাত্রার শেষে এক অনন্ত বিরতি, যেখানে আর কোনো গন্তব্যের হাতছানি নেই, নেই কোনো প্রত্যাশার ভার। জীবনের সমস্ত রং, সুর, আর স্পর্শ মুছে গিয়ে জেগে থাকে এক গভীর, কালো শূন্যতা, যা একই সাথে ভীতিপ্রদ এবং পরম শান্তিময়।
 
 যেন কোনো প্রাচীন তারকার শেষ আলোটুকু নিভে যাওয়ার পর তার স্থান হয় অসীম আঁধারে। আমি সেই মহাজাগতিক একাকীত্বে লীন হয়ে যাবো, যেখানে সময় আর স্থানের কোনো বন্ধন নেই। আমার সত্তার প্রতিটি অংশ, প্রতিটি স্মৃতি, প্রতিটি অনুভূতি এক অতলান্তিক অন্ধকারে হারিয়ে যাবে। এ এক ধরনের মুক্তি, যা জীবনের সকল ভার থেকে সম্পূর্ণ নিষ্কৃতি দেয়। একাকীত্বের সেই হিমশীতল নীরবতায় কেবল আমি থাকবো, আর আমার নিজস্ব বিলীন হওয়ার প্রশান্তি।
 
-অতল শূন্যের বুকে হারিয়ে যাওয়ার এই ইচ্ছা এক অদ্ভুত প্রশান্তি নিয়ে আসে। জীবনের সব ব্যস্ততা, কোলাহল, আর চাওয়া-পাওয়ার হিসেব যখন অর্থহীন মনে হয়, তখন এই হারিয়ে যাওয়াটাকেই মনে হয় পরম মুক্তি। হয়তো সবটুকু আলো নিভে যাওয়ার পর কেবল একটা গভীর অন্ধকারই থাকবে, কিন্তু তাতে কোনো ভয় নেই। বরং আছে এক ধরনের স্বস্তি, যেখানে কোনো প্রশ্ন নেই, কোনো উত্তর নেই, কোনো আশা নেই, কোনো নিরাশা নেই। কেবল শূন্যতার মাঝে বিলীন হয়ে যাওয়া।
+অতল শূন্যের বুকে হারিয়ে যাওয়ার এই ইচ্ছা এক অদ্ভুত প্রশান্তি নিয়ে আসে। জীবনের সব ব্যস্ততা, কোলাহল, আর চাওয়া-পাওয়ার হিসেব যখন অর্থহীন মনে হয়, তখন এই হারিয়ে যাওয়াটাকেই মনে হয় পরম মুক্তি। হয়তো সবটুকু আলো নিভে যাওয়ার পর কেবল একটা গভীর অন্ধকারই থাকবে, কিন্তু তাতে কোনো ভয় নেই। বরং আছে এক ধরনের স্বস্তি, যেখানে কোনো প্রশ্ন নেই, কোনো উত্তর নেই, কোনো আশা নেই, কোনো নিরাশা নেই। কেবল শূন্যতার মাঝে বিলীন হয়ে যাওয়া।
 
-এ যেন দীর্ঘ পথ হেঁটে এসে ক্লান্ত পথিক যখন এক শান্ত জায়গায় পৌঁছায়, যেখানে আর কোনো দিকে যাওয়ার নেই। সে কেবল বসে পড়ে, নিজেকে প্রকৃতির সঙ্গে মিশিয়ে দেয়, আর ধীরে ধীরে নিজের পরিচয়টাকেও ভুলে যায়। এই হারিয়ে যাওয়াটা নিজের সঙ্গে নিজের একটা শেষ বোঝাপড়া। যেখানে সব কিছু মেনে নিয়ে, কোনো অভিযোগ না করে, জীবনের গল্পটার শেষ অধ্যায়টা লেখা হয়। তারপর শুধু একটা গভীর নিঃশ্বাস, আর সবকিছু শেষ। নিজের অস্তিত্ব ফুরিয়ে দিয়ে সেই অতল শূন্যের বুকে হারিয়ে যাওয়া এক ধরনের ভালোবাসার মতো।
+এ যেন দীর্ঘ পথ হেঁটে এসে ক্লান্ত পথিক যখন এক শান্ত জায়গায় পৌঁছায়, যেখানে আর কোনো দিকে যাওয়ার নেই। সে কেবল বসে পড়ে, নিজেকে প্রকৃতির সঙ্গে মিশিয়ে দেয়, আর ধীরে ধীরে নিজের পরিচয়টাকেও ভুলে যায়। এই হারিয়ে যাওয়াটা নিজের সঙ্গে নিজের একটা শেষ বোঝাপড়া। যেখানে সব কিছু মেনে নিয়ে, কোনো অভিযোগ না করে, জীবনের গল্পটার শেষ অধ্যায়টা লেখা হয়। তারপর শুধু একটা গভীর নিঃশ্বাস, আর सबकुछ শেষ। নিজের অস্তিত্ব ফুরিয়ে দিয়ে সেই অতল শূন্যের বুকে হারিয়ে যাওয়া এক ধরনের ভালোবাসার মতো।
+    </div>
+</div>
+
+<!-- আলাদা পেজ ৪ -->
+<div id="poem4" class="page-view">
+    <button class="back-btn" onclick="closePage('poem4')">← ফিরে যান</button>
+    <h2 style="color: var(--accent-color); margin-bottom: 5px;">অস্তিত্বের সমাপ্তি</h2>
+    <div class="author-name">— জাকারিয়া হাছান</div>
+    <div class="poem-content">
+তারপর, এই নপ্রিয় দেহের প্রতিটি কণা, প্রতিটি স্পন্দন, প্রতিটি জাগতিক স্মৃতি আমি ফুরিয়ে দেবো। আমার অস্তিত্বের সর্বশেষ শিখাটুকু নিভে যাবে এক গভীর, অন্তিম নীরবতায়। আমি বিলীন হয়ে যাবো সেই অতলান্ত শূন্যের বুকে, যেখানে সময় তার স্রোত হারিয়েছে এবং স্থান তার সীমা ভুলে গেছে। এ এক পরম আত্ম-বিসর্জন, যেখানে জীবনের সমস্ত কোলাহল, আলো, এবং বর্ণের কোলাহল স্তব্ধ হয়ে যায়। এ যেন এক মহাজাগতিক নীরবতার গভীরে নিজেকে সমর্পণ করা, যেখানে আর কোনো কিছুরই অস্তিত্ব থাকে না।
+
+​এই হারিয়ে যাওয়া কোনো পরাজয় নয়, বরং এক গভীর মুক্তি। জীবনের জটিল জাল থেকে নিজেকে ছিন্ন করে, সব বন্ধন থেকে মুক্ত হয়ে, আমি মিশে যাবো সেই আদিম শূণ্যতার সঙ্গে। সেখানে কোনো আকাঙ্ক্ষা নেই, কোনো বেদনা নেই, কোনো স্মৃতি নেই, শুধু আছে এক নিরাকার অনন্ত প্রশান্তি। আমি হয়ে উঠবো সেই শূন্যতারই অংশ, যেখানে কোনো শুরু বা শেষ নেই। এই বিলীন হয়ে যাওয়া এক ধরনের অমরত্ব, যেখানে আমি আমার ব্যক্তিগত সত্তার ঊর্ধ্বে উঠে এক চিরন্তন নৈঃশব্দের অংশ হয়ে যাবো।
+
+​আমার এই অস্তিত্বের সমাপ্তি যেন এক প্রাচীন তারকার শেষ আলোটুকু নিভে যাওয়ার মতো, যা মহাকাশের গভীরতম অন্ধকারে মিশে যায়। সেই অন্ধকারের মধ্যেই আমি খুঁজে পাবো আমার নতুন ঠিকানা, যেখানে আমি একাকী, কিন্তু সম্পূর্ণ। এই হারিয়ে যাওয়া এক নতুন যাত্রা, যেখানে আমি নিজেকে ছেড়ে দিয়ে এক মহাজাগতিক অস্তিত্বের সঙ্গে একাকার হয়ে যাবো।
+    </div>
+</div>
+
+<!-- আলাদা পেজ ৫ -->
+<div id="poem5" class="page-view">
+    <button class="back-btn" onclick="closePage('poem5')">← ফিরে যান</button>
+    <h2 style="color: var(--accent-color); margin-bottom: 5px;">মুখোশের আড়ালে আমি</h2>
+    <div class="author-name">— জাকারিয়া হাছান</div>
+    <div class="poem-content">
+​আমার ভেতরের আমি'টা আজ বড্ড ক্লান্ত। এতটাই ক্লান্ত যে, এখন হাসির মুখোশটা ধরে রাখতেও কষ্ট হয়। প্রতিটি দিন, প্রতিটি মুহূর্ত, হাসির অভিনয় করতে গিয়ে বুজেছি, আমি এক নিপুণ অভিনেতা। এমন এক চরিত্র ফুটিয়ে তুলেছি, যার সাথে আমার নিজের কোনো মিল নেই। বাইরে থেকে সবাই যাকে দেখে, হাসিখুশি, প্রাণোচ্ছল আর হয়তো খুব শক্তিশালী। কিন্তু আয়নার সামনে দাঁড়ালে আমি দেখি এক পরাজিত সৈনিককে, যে মিথ্যের চাদর পরতে পরতে ক্লান্ত হয়ে পড়েছে।
+
+​আমার ভেতরে জমে আছে না বলা কথার এক বিশাল পাহাড়। সেই পাহাড়ে চাপা পড়ে আছে আমার অপ্রকাশিত ইচ্ছেগুলো, আমার অভিমান, আমার কান্না আর আমার তীব্র একাকিত্ব। কতবার চেয়েছি চিৎকার করে বলি—"আমি ভালো নেই! আমার কষ্ট হচ্ছে!" কিন্তু চারপাশের মানুষগুলোর প্রত্যাশার চাপ আর আমাকে ভুল বোঝার ভয় সেই শব্দগুলোকে গলার কাছেই পাথর করে দেয়। তাই সবশেষে সহজ পথটাই বেছে নিয়েছি—মিথ্যে হাসি আর মেকি ভদ্রতা।
+
+​এই অভিনয়টা সবচেয়ে কঠিন হয়ে ওঠে কাছের মানুষগুলোর সামনে। তাদের হাসিমুখ দেখার জন্য, তাদের ভালো রাখার জন্য আমি অনবরত নিজের অনুভূতিগুলোকে হত্যা করি। আমার হাসিগুলোও যেন ধার করা, কথাগুলোও সাজানো। প্রতিটি মুহূর্ত এক একটি যুদ্ধ—নিজের সাথে নিজের যুদ্ধ। জানি এই যুদ্ধের কোনো শেষ নেই, কেবল অপেক্ষিত মৃত্যু ছাড়া।
+
+​আজ আমার মস্তিষ্ক আর এই ভার বইতে পারছে না। বিষণ্নতার শীতল স্রোত আমাকে ধীরে ধীরে গ্রাস করে নিচ্ছে। মনে হচ্ছে, এই অন্তহীন অভিনয়ের চেয়ে সত্যের মুখোমুখি হওয়া অনেক সহজ ছিলো। নিজের কাছে সৎ থাকতে না পারার এই যন্ত্রণা আমাকে ধীরে ধীরে ভেতর থেকে শেষ করে দিচ্ছে।
+
+​আমি আর পেরে উঠছি না। এই মুখোশটা এখন ছিঁড়ে ফেলতে ইচ্ছে করে। ইচ্ছে করে, কেউ একজন আমার চোখের দিকে তাকিয়ে বলুক, "আমি জানি, তুমি ভালো নেই। এবার তো একটু থামো, একটুখানি না হয় নিজের জন্য বাঁচো।"
+
+​আজ আমি আমার এই বিষণ্নতার কাছেই নতজানু, এই ক্লান্তির কাছেই সমর্পিত। এখন শুধু একরাশ নীরবতা আর নিজের কাছে ফেরার আকুতি। শুধুই নিজের কাছে।
+    </div>
+</div>
+
+<!-- আলাদা পেজ ৬ -->
+<div id="poem6" class="page-view">
+    <button class="back-btn" onclick="closePage('poem6')">← ফিরে যান</button>
+    <h2 style="color: var(--accent-color); margin-bottom: 5px;">মঞ্চের পিছনের গল্প</h2>
+    <div class="author-name">— জাকারিয়া হাছান</div>
+    <div class="poem-content">
+কখনো তোমাদের বুঝতেই দেই নাই আমার হাসি ভরা চেহারার আড়ালে কতটা যন্ত্রণা লুকিয়ে রেখেছি।
+​আসলে, আমার ভেতরের মানুষটা নীরবে রক্তক্ষরণ করে চলে। প্রতিদিন সকালে একটা নিখুঁত মুখোশ পরি, যাতে কেউ আমার ভেতরের ভাঙনটা দেখতে না পায়। এই হাসিটা আমার সবচেয়ে বড় মিথ্যাচার; একটা দেয়াল, যা আমাকে আর আমার একাকীত্বকে পৃথিবীর কাছ থেকে আড়াল করে রাখে। প্রতি রাতে যখন আলো নিভে যায়, তখন সেই অভিনয় শেষ হয় এবং শুরু হয় ভেতরের ক্ষতগুলো গুনে দেখার পালা। কেউ যদি জানতে, এই হাসিটুকুর জন্য প্রতি রাতে আমায় কতটা মূল্য দিতে হয়। বড্ড ক্লান্ত লাগে এই 'সুখী' মানুষ সেজে থাকতে, তবুও মঞ্চ ছাড়তে পারি না। কারণ, আমি জানি, আমার দুর্বলতা প্রকাশ পেলে হয়তো তোমরা সরে যাবে। তাই, আমি একাই বয়ে চলি এই অদৃশ্য কষ্টের ভার, যেখানে আমার চোখের জল কেবল বালিশটাই দেখতে পায়।
+    </div>
+</div>
+
+<!-- আলাদা পেজ ৭ -->
+<div id="poem7" class="page-view">
+    <button class="back-btn" onclick="closePage('poem7')">← ফিরে যান</button>
+    <h2 style="color: var(--accent-color); margin-bottom: 5px;">তোমার পর</h2>
+    <div class="author-name">— জাকারিয়া হাছান</div>
+    <div class="poem-content">
+তুমি চলে যাবার পর আমি আর নতুন করে কাওকে ভালোবাসতে পারি নাই, নিজেকে হারিয়ে ফেলেছি  হতাশার গভীর কুয়াশায়। শহরের ব্যস্ততা, মানুষের হাসি, কোলাহল- সবকিছুই আজ আমার কাছে এখন মৃত নদীর মতো লাগে । যে নদীতে কোনো ঢেউ নেই, কোনো প্রাণের স্পন্দন নেই। আমি সেই নদীর তীরে বসে থাকা এক বিষণ্ণ মানুষ, যে তার জীবনের সবটুকু রঙ হারিয়ে ফেলেছে।
+
+নতুন করে নিজেকে সাজানোর সাহস আর হলো না আমার । ভেঙে যাওয়া আয়নার টুকরোগুলো যেমন জোড়া লাগানো যায় না, তেমনি আমার মনটাও আজ টুকরো টুকরো হয়ে রয়ে গেছে । প্রতিটি টুকরোর ওপর তোমার স্মৃতি, তোমার হাসি, তোমার স্পর্শ। তাইতো টুকরোগুলো আর জোড়া লাগানোর ইচ্ছে হয় না। কারণ আমি জানি, জোড়া লাগালেও তাতে চিরকালের জন্য একটি ফাটল থেকে যাবে। আর সেই ফাটল দিয়ে কেবল বিষণ্ণতা আর শূন্যতা প্রবেশ করবে।
+
+কলমের কালি ফুরিয়ে গেলে তা আবার ভরা যায়, এই সহজ সত্যটা আজ আমার কাছে এক বিশাল মিথ্যা। কারণ এই শহরের মানুষরা শুধু কলমের কালি নয়, তারা মানুষের আবেগ, ভালোবাসা আর বিশ্বাসকেও মূল্যহীন করে দিয়েছে। ভালোবাসাকে তারা এক পণ্য বানিয়ে ফেলেছে, যা ব্যবহারের পর ছুড়ে ফেলা যায়। তাই নতুন করে আর কাউকে ভালোবাসার কথা ভাবতেও ভয় হয়। আমার কলমের নিবটা তাই আজ শুকনো, কারণ নতুন করে আর কোনো মিথ্যা গল্প লেখার আগ্রহ নেই। যে শহরে সত্যের কোনো মূল্য নেই, সেখানে ভালোবাসা কেবলই একটি উপহাস।
+
+তুমি ছিলে আমার জীবনের একমাত্র বসন্ত। তোমার চলে যাওয়ার পর আমার জীবন থেকে সব ঋতু হারিয়ে গেছে। এখন শুধু শীতের দীর্ঘ রাতগুলো আছে, যেখানে তোমার স্মৃতিগুলো আমাকে হিমশীতল করে দেয়। প্রতি রাতে যখন চাঁদ ওঠে, আমি তার আলোয় তোমার মুখটা খুঁজি। মনে পড়ে সেইসব দিনগুলো, যখন আমরা একসাথে বসে আকাশের দিকে তাকিয়ে থাকতাম, আর অজস্র স্বপ্ন বুনতাম। আজ সেই স্বপ্নগুলো কেবলই কাঁটার মতো বুকে বিঁধে আছে, যা আমাকে প্রতিনিয়ত কষ্ট দেয়।
+
+আমার এই বিষণ্ণতা কেবল আমার একার নয়, যেন এই শহরের সবটুকু বিষণ্ণতা আমার মধ্যে এসে ভর করেছে। আমি এখন সেই পুরোনো বাড়ির মতো, যার দেওয়ালে শ্যাওলা জমেছে, জানালাগুলো ধুলোয় ঢাকা, আর সদর দরজাটা, সেটা তো আজকাল আর খোলেই না। জানি, নতুন করে আর তুমি আসবে না । তবুও, রাতের নিস্তব্ধতায় তোমার কণ্ঠস্বর শোনার জন্য আমার কান দুটি খোলা রাখি। হয়তো তুমি কোনো এক কালে বা সময়ে ফিরে আসবে, আর এই পোড়া শহরে আবারও নতুন করে প্রাণের সঞ্চার হবে। কিন্তু সে শুধুই মিথ্যে আসা আর মরিচিকা। আমি জানি, এই অপেক্ষার বোঝা আর এই নিস্তব্ধতার মধ্যে বেঁচে থাকাই আমার একমাত্র নিয়তি।
+    </div>
+</div>
+
+<!-- আলাদা পেজ ৮ -->
+<div id="poem8" class="page-view">
+    <button class="back-btn" onclick="closePage('poem8')">← ফিরে যান</button>
+    <h2 style="color: var(--accent-color); margin-bottom: 5px;">একাকীত্বের নীরব আর্তনাদ</h2>
+    <div class="author-name">— জাকারিয়া হোসাইন (১৬/১১/২৫)</div>
+    <div class="poem-content">
+​আমি সব সময় একা ছিলাম, আমার অস্তিত্ব জুড়ে এক হিমশীতল শূন্যতা, নিরব নিস্তব্ধ অন্ধকারের মতো। তুমি বা তোমরা শুধুই প্রিয়জনের অভিনয় করতে মগ্ন। তোমাদের শব্দগুলো ছিল মায়াবী, কিন্তু স্পর্শ ছিল বরফের চেয়েও শীতল।
+
+​ঠোঁটের ডগায় লেগে থাকা হাসির অন্তরালে আমি যে কতটা একা, তার খবর কে রাখে? এই হাসির বাঁধন যেন এক কৃত্রিম আবরণ, যা আমার ভেতরের ক্ষতকে ঢেকে রাখে অতি যত্নে। কেউ জানতেউ পারে না, হাসির রেখাগুলো আসলে আঁকা হয় চোখের জল শুকিয়ে যাওয়া কালি দিয়ে।
+
+​রাতের নিরব অন্ধকার আসলে, অদৃশ্য এক অগ্নিগর্ভে আমি জলি, আমি পুরি, আমি ছাই হয়ে উরে যাই। সেখানে কোনো সাক্ষী থাকে না আমার দহনের, থাকে না কোনো সহানুভূতি। শুধু থাকে অগ্নিদগ্ধ হওয়ার কঠিন যন্ত্রণা। সেই ছাইটুকুও মিশে যায় নিকষ কালো নৈঃশব্দ্যে।
+
+​তবুও দিনের আলো আমাকে বাধ্য করে হাসির অভিনয় করতে। প্রতিটি সকাল যেন এক নতুন মঞ্চ, আর আমি তাতে দক্ষ কিন্তু ক্লান্ত অভিনেতা। শুধু মনে হয়— এই অন্তহীন একাকীত্বের প্রহর কবে শেষ হবে, কবে সত্যিই আলো ফুটবে এই হৃদয়ের গহীনে?
     </div>
 </div>
 
@@ -248,6 +539,21 @@
 
     function closePage(id) {
         document.getElementById(id).style.display = 'none';
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('light-mode');
+        const btn = document.querySelector('.theme-toggle');
+        if (document.body.classList.contains('light-mode')) {
+            btn.innerHTML = '☀️ Light';
+        } else {
+            btn.innerHTML = '🌙 Dark';
+        }
+    }
+
+    function copyContact(text) {
+        navigator.clipboard.writeText(text);
+        alert('Email Copied to Clipboard!');
     }
 </script>
 </body>
